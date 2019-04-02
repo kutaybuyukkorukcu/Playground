@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Demo {
+  public:
+    Demo(const char *nm);
+    ~Demo();
+  private:
+    char isim[20];
+};
+
+Demo::Demo(const char *nm) {
+  strncpy(isim, nm, 20);
+  cout << isim << " icin yapici fonksiyon cagrimi\n";
+}
+
+Demo::~Demo() {
+  cout << isim << " icin yikici fonksiyon cagrimi\n";
+}
+
+void fonk() {
+  Demo yerelFonknesnesi("yerelFonkNesnesi");
+  static Demo staticNesne("statikNesne");
+  cout << "fonk icinde" << endl;
+}
+
+Demo globalNesne("globalNesne");
+
+int main() {
+  Demo yerelMainNesnesi("yerelMainNesnesi");
+  cout << "fonk cagrimindan once, main icinde\n";
+  fonk();
+  cout << "fonk cagrimindan sonra, main icinde\n";
+  return 0;
+}
