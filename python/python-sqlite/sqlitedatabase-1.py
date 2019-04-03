@@ -14,16 +14,9 @@ def addRandomValue():
   rTime = time.time()
   date = str(datetime.datetime.fromtimestamp(rTime).strftime('%Y-%M-%D %H:%M:%S'))
   keyword = 'Python Sqlite3'
-  value = random.randrange(0,10)
+  value = random.randrange(90,100)
   cursor.execute('INSERT INTO dbTable (rTime, date, keyword, value) VALUES(?, ?, ?, ?)',(rTime, date, keyword, value))
   con.commit()
-
-""" createTable()
-i = 0
-while (i < 10):
-    addRandomValue()
-    time.sleep(1)
-    i += 1 """
 
 def getValues():
   cursor.execute('SELECT rTime, keyword, value FROM dbTable WHERE value = 2.0')
@@ -40,7 +33,6 @@ def updateValues():
     print(i)
   
   cursor.execute("UPDATE dbTable SET value = 99.0 WHERE value = 2.0")
-  # cursor.execute('SELECT * FROM dbTable')
   cursor.execute('SELECT value FROM dbTable')
   
   data = cursor.fetchall()
@@ -56,9 +48,10 @@ def deleteValues():
   for i in data:
     print(i)
   print("There's none")
-  
+
+for i in range(10):
+  addRandomValue()
 updateValues()
-deleteValues()
 print("done")
 
 con.close()
