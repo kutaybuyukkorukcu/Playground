@@ -108,3 +108,51 @@ def bolen_toplami(sayi):
   return sum
 
 dost(220, 284)
+
+# Yükseklik ve genişlik niteliklerine sahip olan, bunları kullanarak alan ve çevre hesaplaması için ilgili yöntemleri de içeren bir Dikdörtgen sınıfı yazınız.​
+
+# Kenar niteliğine sahip olan ve Dikdörtgen sınıfındaki yöntemleri miras alıp çevre ve alan hesaplayan Kare sınıfını yazınız.​
+
+# Yükseklik ve taban niteliklerine ve kendi çevre yöntemine sahip olan alan yöntemini ise Dikdörtgen sınıfından miras alan ParalelKenar sınıfını yazınız.​
+
+# İkizKenarÜçgen sınıfı ise yükseklik ve taban niteliklerini ParalelKenar sınıfından miras alacak ama çevre ve alan hesabı için kendi yöntemlerini kullanması gerekecektir.​
+
+# Kare hariç her sınıfta verilen bir sembol ile ilgili genişlik, yükseklik, taban, kenar değerlerine göre şekli çizdiren bir çizdir yöntemi yazınız. Kare ise Dikdörtgen’den miras aldığı yöntemi kullanabilecektir. ​
+
+# 3. hafta yaptığımız üçgen çizimlerinde sembol olarak hep '*' kullanılmıştı, mantık benzer olacak ama sembol değiştirilebilecek​
+
+# Ali,SOLMAZ,60​
+
+# Selman,ÇIKMAZ,90​
+
+# Bahri,SEZGİN,80​
+
+# Selçuk,KIRGIZ,45​
+
+# Kemal,GÜNEŞ,55​
+
+# Ahmet,ÇALIŞKAN,75
+
+# ukarıdaki gibi içeriğe sahip bir "sınavsonuçları.txt" dosyasına sahip olduğunuzu düşünün.​
+
+# Sınava giren tüm öğrencilerin adı, soyadı ve sınav sonucu saklanmış olan bu dosyada her kayıt ayrı bir satıra yazılmış ve değerler arasında virgül kullanılmıştır.​
+
+# Bu tip dosyalar CSV (comma seperated values) olarak bilinir.​
+
+# Yazacağınız program bu dosyayı okuyup sınav sonucu 60 ve üzerinde olan öğrencileri ve notlarını aynı biçimde yeni yaratacağı "geçenler.txt" dosyasına, diğerlerini de yeni yarayacağı "kalanlar.txt" dosyasına yazsın.​
+
+# Kullanıcının ekleyeceği notları notlar.txt dosyasında sıra ile saklayan bir program yazın. Program çalıştırıldığında dosyanın içinde saklı olan tüm notlar sıra numarası ile birlikte görüntülenecek ve altında "not eklemek için 1’e, not silmek için 2’ye çıkış için ESC’ye basın" mesajı görüntülenecektir.​
+
+# Not Ekleme seçildiğinde "Notunuzu Giriniz" mesajı görüntülenecek ve kullanıcının ekrana yazacağı not ENTER basıldığı anda dosyanın sonuna eklenecektir.​
+
+# Not Silme seçildiğinde "Silmek İstediğiniz Notun Numarasını Giriniz" mesajı görüntülenecek ve kullanıcının seçtiği not dosyadan silinecektir.​
+
+# Ekleme ve silme işlemlerinden sonra ekran temizlenip programın başına dönülmelidir (Dosyanın son hali ekranda gösterilip yine altında "not eklemek için 1’e, not silmek için 2’ye çıkış için ESC’ye basın" mesajı görüntülenmelidir).​
+
+# SQLite üzerinde saklanacak bir telefon rehberi oluşturun.​
+
+# Rehberiniz aynı kişiye ait birçok telefon numarası saklanabilecek bir yapıda olsun.​
+
+# Programınızda bir menü olsun ve ilgili seçenekler seçildiğinde kayıtlar üzerinde arama, ekleme, silme ve güncelleme (tel numarasını değiştirme gibi) işlemleri yapılabilsin.​
+
+# Arama yaparken iki seçenek olsun: Hem telefon numarası verilip ilgili isim getirilebilsin, hem de isim verilip telefon numarası getirilebilsin.
