@@ -77,6 +77,7 @@ print(lol.items()) """
 #Sayiyi yazi olarak bastiran fonksiyon yaziniz
 #694 -> altiyuzdoksandort 1253 -> binikiyuzelliuc
 
+"""
 def print_as_string(sayi):
   "Son iki rakam okunur, onceki basamaklar yuz, bin olarak yazilir"
   listem = [int(x) for x in str(sayi)]
@@ -108,7 +109,7 @@ def bolen_toplami(sayi):
   return sum
 
 dost(220, 284)
-
+"""
 # Yükseklik ve genişlik niteliklerine sahip olan, bunları kullanarak alan ve çevre hesaplaması için ilgili yöntemleri de içeren bir Dikdörtgen sınıfı yazınız.​
 
 # Kenar niteliğine sahip olan ve Dikdörtgen sınıfındaki yöntemleri miras alıp çevre ve alan hesaplayan Kare sınıfını yazınız.​
@@ -117,9 +118,39 @@ dost(220, 284)
 
 # İkizKenarÜçgen sınıfı ise yükseklik ve taban niteliklerini ParalelKenar sınıfından miras alacak ama çevre ve alan hesabı için kendi yöntemlerini kullanması gerekecektir.​
 
+"""
+class dik:
+  yukseklik = 0
+  genislik = 0
+  def __init__(self, yukseklik, genislik):
+    self.yukseklik = yukseklik
+    self.genislik = genislik
+
+  def alan(self):
+    return self.yukseklik * self.genislik
+  
+  def __cevre(self):
+    return (self.yukseklik + self.genislik) * 2
+  
+"""
+
 # Kare hariç her sınıfta verilen bir sembol ile ilgili genişlik, yükseklik, taban, kenar değerlerine göre şekli çizdiren bir çizdir yöntemi yazınız. Kare ise Dikdörtgen’den miras aldığı yöntemi kullanabilecektir. ​
 
-# 3. hafta yaptığımız üçgen çizimlerinde sembol olarak hep '*' kullanılmıştı, mantık benzer olacak ama sembol değiştirilebilecek​
+class kare():
+  def __init__(self, kenar, sekil):
+    self.kenar = kenar
+    self.sekil = sekil
+
+  def ciz(self, kenar, sekil):
+    for i in range(1,kenar):
+      if i == 1 or i == (kenar - 1):
+        print(sekil * kenar)
+      else:
+        print(sekil + (kenar - 2) * " " + sekil) 
+      i = i + 1
+
+a = kare(5, "*")
+a.ciz(a.kenar, a.sekil)
 
 # Ali,SOLMAZ,60​
 
@@ -156,3 +187,13 @@ dost(220, 284)
 # Programınızda bir menü olsun ve ilgili seçenekler seçildiğinde kayıtlar üzerinde arama, ekleme, silme ve güncelleme (tel numarasını değiştirme gibi) işlemleri yapılabilsin.​
 
 # Arama yaparken iki seçenek olsun: Hem telefon numarası verilip ilgili isim getirilebilsin, hem de isim verilip telefon numarası getirilebilsin.
+
+# SQLite veritabanını kullanan ve öğrenci ekleme/silme, ders ekleme/silme, seçilen öğrenci ve ders üzerinden not ekleme/silme işlemlerini yapan bir Tkinter uygulaması geliştiriniz.​
+
+# Takimlar.txt dosyasında isimleri alt alta yazılmış olan takımlar için bir karşılaşma fikstürü oluşturarak Fikstür.txt’ye yazın.​
+
+# Her takım rakipleri ile hem kendi sahasında hem de deplasmanda karşılaşacaktır.​
+
+# A takımı B takımı ile kendi evinde 5. hafta karşılaştıysa, deplasmanda da 5 + (takımsayısı-1). hafta karşılaşmalıdır.​
+
+# Aynı takım arkaya arkaya hep deplasmanda veya hep kendi evinde oynamamalıdır. 1 hafta evinde, 1 hafta deplasmanda şeklinde olmalıdır.​
