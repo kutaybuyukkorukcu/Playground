@@ -1,10 +1,7 @@
 class CSVFile:
-    def __init__(self, worked_data, used_memory, total_memory, cpu_usage, time) :
-        self.worked_data = worked_data
-        self.used_memory = used_memory
-        self.total_memory = total_memory
-        self.cpu_usage = cpu_usage
-        self.time = time
+
+    def __init__(self):
+        print("Instantiated CSVFile")
 
     def get_worked_data(self):
         return self.__worked_data
