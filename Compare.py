@@ -1,167 +1,96 @@
+import webbrowser
 import pandas as pd
 import datetime
-"""
-#self refers to the object
-class dataStruct:
-    def rowCount(self,x):
-        row_count = sum(1 for row in x) + 1
-        return(row_count)
-    def timeDiff(self,x):
-        datetimeFormat = "%H:%M"
-        maxT = max(x["TIME"])
-        minT = min(x["TIME"])
-        diff = datetime.datetime.strptime(maxT, datetimeFormat) - datetime.datetime.strptime(minT, datetimeFormat)
-        return diff
-    def returnPQ(self,x):
-        pqV = sum(x["PQ"])
-        return pqV
-    def returnCPU(self,x):
-        cpuV = sum(x["CPU"]) / dataStruct.row_count(x)
-        return cpuV
-    def returnMEMORY(self,x):
-        memoryV = sum(x["MEMORY"]) / dataStruct.row_count(x)
-        return memoryV
-    def printCPU(self,x):
-        print(dataStruct.returnCPU(x))
+import glob
 
-data1 = input("Select the first csv file you want to compare :")
-table1 = pd.read_csv(data1)
-csv_columnname = ["TIME", "PQ", "CPU", "MEMORY"]
-table1.columns = csv_columnname
-first = dataStruct()
-anan = first.returnCPU(table1)
-print(first.printCPU(anan))
-#self equals first in this case
+files_dir="./files/"
+def getFiles(pattern):
+    return glob.glob(pattern)
 
-"""
-"""
-data1 = input("Select the first csv file you want to compare :")
-table1 = pd.read_csv(data1)
-csv_columnname = ["TIME", "PQ", "CPU", "MEMORY"]
-table1.columns = csv_columnname
-"""
+def getScripts(): # prints //jquery.js
+    all_scripts = ""
+    scripts=getFiles("./js/*.js")
+    for sf in scripts:
+        f = open(sf,"r")
+        all_scripts +=  "\r\n//"+sf+"\r\n" + f.read()
+        f.close()
+    return all_scripts
 
-"""
-csvCount = int(input("Kac tane csv dosyasi karsilastiracaksiniz?"))
+input_files=getFiles(files_dir + "*.csv")
+
+csvCount = len(input_files)
 data = []
 table = []
 rowSayisi = []
 csvFile = []
-#usecols ile istenen sutunlari okutabiliriz
+
 for i in range(0,csvCount): #csv dosyalarinin pathlerini data listesine yaz
-    plsWork = input("i. csv dosyasinin pathini giriniz : ")
+    plsWork = input_files[i]
     data.append(plsWork)
 
 for i in range(0,csvCount): #data pathlerini oku ve table listesine yaz
     plsWork2 = pd.read_csv(data[i])
-    table.append(plsWork2)
-#ozel kolon secme yerine kullanicidan kolon isimlerini duzgun sekilde girilmis bir csv dosyasi bekleyip belirli sutunlari mi secelim
-csv_sutun_isimleri = ["TIME","PQ","CPU","MEMORY"]
+    df = pd.DataFrame(plsWork2)
+    df = df[["worked_data_count","machine_used_memory","cpu_usage_rate","time"]]
+    table.append(df)
+
+csv_sutun_isimleri = ["worked_data_count","machine_used_memory","cpu_usage_rate","time"]
+
 for i in range(0,csvCount): #Her table icin sutun ata
-    table[i].columns = csv_sutun_isimleri
+   table[i].columns = csv_sutun_isimleri
 
 for i in range(0,csvCount):  #Her table icin farkli bir row sayisi olmali
-    plsWork3 = sum(1 for row in table[i]) + 1
+    plsWork3 = len(table[i])
     rowSayisi.append(plsWork3)
 
 for i in range(0,csvCount): #alter table islemi
-    datetimeFormat = "%H:%M"
-    maxT = max(table[i]["TIME"])
-    minT = min(table[i]["TIME"])
+    maxPq = max(table[i]["worked_data_count"])
+    minPq = min(table[i]["worked_data_count"])
+    avgPq = (maxPq-minPq) / rowSayisi[i]
+    table[i].drop("worked_data_count",axis=1,inplace=False)
+    table[i]["worked_data_count"] = avgPq
+
+    memoryV = sum(table[i]["machine_used_memory"]) / rowSayisi[i]
+    table[i].drop("machine_used_memory",axis=1,inplace=False)
+    table[i]["machine_used_memory"] = memoryV
+
+    memoryV = (sum(table[i]["machine_used_memory"]) / rowSayisi[i] ) / (1024 * 1024 * 1024)
+    table[i]["memory_as_GB"] = str(memoryV)[:7]
+
+    cpuV = sum(table[i]["cpu_usage_rate"]) / rowSayisi[i]
+    table[i].drop("cpu_usage_rate",axis=1,inplace=False)
+    table[i]["cpu_usage_rate"] = cpuV
+
+    datetimeFormat = "%H:%M:%S"
+    maxT = max(table[i]["time"])
+    minT = min(table[i]["time"])
     diff = datetime.datetime.strptime(maxT, datetimeFormat) - datetime.datetime.strptime(minT, datetimeFormat)
-    table[i].drop("TIME",axis=1,inplace=False)
-    table[i]["TIME"] = diff
-    pqV = sum(table[i]["PQ"])
-    table[i].drop("PQ",axis=1,inplace=False)
-    table[i]["PQ"] = pqV
-    cpuV = sum(table[i]["CPU"]) / rowSayisi[i]
-    table[i].drop("CPU",axis=1,inplace=False)
-    table[i]["CPU"] = cpuV
-    memoryV = sum(table[i]["MEMORY"]) / rowSayisi[i]
-    table[i].drop("MEMORY",axis=1,inplace=False)
-    table[i]["MEMORY"] = memoryV
+    table[i].drop("time",axis=1,inplace=False)
+    table[i]["time"] = diff
+
     plsWork4 = table[i][:1]
     csvFile.append(plsWork4)
-    print(csvFile[i])
-"""
 
+json = {}
+jsonResultObject={}
 
-"""
-datetimeFormat = "%H:%M"
-maxT = max(table[i]["TIME"])
-minT = min(table[i]["TIME"])
-diff = datetime.datetime.strptime(maxT, datetimeFormat) - datetime.datetime.strptime(minT, datetimeFormat)
-pqV = sum(table[i]["PQ"])
-calculated.append(pqV)
-cpuV = sum(table[i]["CPU"]) / row_count
-calculated.append(cpuV)
-memoryV = sum(table[i]["MEMORY"]) / row_count
-calculated.append(memoryV)
-print(calculated[0])
+for n in range(0,len(csvFile)):
+    file_name = input_files[n]
+    file_name = file_name.split("\\")[-1] # windows icin -> \\
+    e = csvFile[n]
+    json["worked_data_count"]=e["worked_data_count"].get(0)
+    json["machine_used_memory"]=e["machine_used_memory"].get(0)
+    json["memory_as_GB"] = e["memory_as_GB"].get(0)
+    json["cpu_usage_rate"]=e["cpu_usage_rate"].get(0)
+    json["time"]=e["time"].get(0).total_seconds()
+    jsonResultObject[file_name]=json
+    print (jsonResultObject)
 
-"""
-
-"""
-
-def properties():
-    datetimeFormat = "%H:%M"
-    maxT = max(table[i]["TIME"])
-    minT = min(table[i]["TIME"])
-    diff = datetime.datetime.strptime(maxT, datetimeFormat) - datetime.datetime.strptime(minT, datetimeFormat)
-    pqV = sum(table[i]["PQ"])
-    cpuV = sum(table[i]["CPU"]) / row_count    
-    memoryV = sum(table[i]["MEMORY"]) / row_count
-
-"""
-
-
-
-
-
-
-
-
-"""
-data1 = input("Select the first csv file you want to compare :")
-data2 = input("Select the second csv file you want to compare :")
-table1 = pd.read_csv(data1)
-table2 = pd.read_csv(data2)
-csv_columnname = ["TIME", "PQ", "CPU", "MEMORY"]
-table1.columns = csv_columnname
-table2.columns = csv_columnname
-printProp(table1)
-printProp(table2)
-"""
-
-"""
-data = [line.strip() for line in open("C:/users/kutay/desktop/request.csv", 'r')]
-print(data)
-with open('C:/users/kutay/desktop/request.csv') as f:
-    lines = f.read().splitlines()
-print(lines) 
-
-with open('C:/users/kutay/desktop/request.csv','r') as file:
-    for line in file:
-        print(line[0:line.find(',')])
-
-data2 = [line.strip() for line in open("C:/users/kutay/desktop/request1.csv",'r')]
-row_sayisi = len(data) - 1
-column_sayisi = 4 # koda dokemedim 4 kolon olmak zorunda sarti koydum
-#print(data)
-#for i in range(0,column_sayisi):
-    #for n in range(0,row_sayisi):
-#matrix = [data[i:i+1] for i in range(0,len(data))]
-#trinity = [data[i:i+1] for i in range(0,len(data2))]
-#for i in matrix:
-#    print(i)
-#print(data[3][3])
-#for i in trinity:
-   # print(i)
-"""
-
-
-"""
-csvCount = int(input("kac csv dosyasi okutacaksin"))
-for i in range(1,csvCount+1):
-    print()
-"""
+file=open("./compare.html","r")
+compare = file.read()
+file.close()
+compare = compare.replace("{{output}}" , str(jsonResultObject))
+compare = compare.replace("{{scripts}}" , getScripts())
+outfile = open("compare.html","w")
+outfile.write(compare)
+outfile.close()
